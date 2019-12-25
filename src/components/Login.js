@@ -53,6 +53,15 @@ class Login extends React.Component {
         })
     }
 
+    register = e => {
+        // e.preventDefault()
+        console.log("Register")
+        const { email, password } = this.state
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(() => this.setState({ message: 'Register Success' }))
+            .catch(error => { this.setState({ message: error.message }) })
+    }
+
     render() {
         const { message } = this.state
         const { currentUser } = this.props
@@ -94,6 +103,7 @@ class Login extends React.Component {
                                 </div>
                             </div>
                         </form>
+                        <button className="button is-link" onClick={this.register}>Register</button>
                     </div>
                 </div>
             </section>

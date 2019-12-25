@@ -2,18 +2,18 @@ import React from "react";
 import Home from './components/Home';
 import Login from './components/Login';
 import Todos from './components/Todos';
-import * as firebase from 'firebase';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
 } from "react-router-dom";
-
+import './App.scss'
 export default function App() {
   return (
     <Router>
       <div>
+        <h1 className="title">React-Router-Redux-Firebase-Axios-Sass</h1>
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -28,13 +28,13 @@ export default function App() {
 
         <Switch>
           <Route path="/login">
-            <Login firebase={firebase} />
+            <Login />
           </Route>
           <Route path="/todos">
-            <Todos firebase={firebase} />
+            <Todos />
           </Route>
           <Route path="/">
-            <Home firebase={firebase} />
+            <Home />
           </Route>
         </Switch>
       </div>
