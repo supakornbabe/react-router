@@ -14,17 +14,9 @@ export default function App() {
     <Router>
       <div>
         <h1 className="title">React-Router-Redux-Firebase-Axios-Sass-Docker-Travis</h1>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/todos">Todos</Link>
-          </li>
-        </ul>
+            <Link to="/">Home</Link>{'\u00A0'}
+            <Link to="/login">Login</Link>{'\u00A0'}
+            <Link to="/todos">Todos</Link>{'\u00A0'}
 
         <Switch>
           <Route path="/login">
