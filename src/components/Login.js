@@ -1,6 +1,6 @@
 import React from "react";
 import firebase from '../firebase';
-import { logIn, logOut } from '../actions/auth';
+import { sessionAction } from '../actions/sessionAction'
 import { connect } from 'react-redux'
 
 class Login extends React.Component {
@@ -12,13 +12,15 @@ class Login extends React.Component {
             message: ''
         }
     }
+
     componentDidMount() {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                this.props.logIn(user)
+                this.logIn(user.email)
             }
         })
     }
+
     onChange = e => {
         const { name, value } = e.target
         this.setState({
@@ -26,20 +28,31 @@ class Login extends React.Component {
         })
     }
 
+    logIn = (user) => {
+        this.props.sessionAction(user);
+    }
+
+    logOut = () => {
+        this.props.sessionAction(null);
+    }
+
     onSubmit = e => {
         e.preventDefault()
         const { email, password } = this.state
         firebase.auth().signInWithEmailAndPassword(email, password).then(response => {
-            this.props.logIn(response.user)
+            this.logIn(response.user.email)
             console.log(this.props.currentUser)
         }).catch(error => { this.setState({ message: error.message }) })
     }
+
     logout = e => {
         e.preventDefault()
         firebase.auth().signOut().then(response => {
-            this.props.logOut()
+            this.logOut()
+            console.log(this.props.currentUser)
         })
     }
+
     render() {
         const { message } = this.state
         const { currentUser } = this.props
@@ -47,7 +60,7 @@ class Login extends React.Component {
         if (currentUser) {
             return (
                 <div>
-                    <p>Hello {currentUser}</p>
+                    <p>Hello {this.props.currentUser}</p>
                     <button onClick={this.logout}>Logout</button>
                 </div>
             )
@@ -90,12 +103,11 @@ class Login extends React.Component {
 
 
 const mapStateToProps = state => ({
-    ...state
-});
+    currentUser: state.sessionReducer.currentUser
+})
 
 const mapDispatchToProps = dispatch => ({
-    logIn: (user) => dispatch(logIn(user)),
-    logOut: () => dispatch(logOut())
-});
+    sessionAction: (user) => dispatch(sessionAction(user))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

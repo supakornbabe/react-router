@@ -1,7 +1,9 @@
 import React from "react";
 import logo from '../static/logo192.png'
-// import Action from '../actions';
 import { connect } from 'react-redux'
+import firebase from '../firebase';
+import { sessionAction } from '../actions/sessionAction'
+
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -9,22 +11,33 @@ class Home extends React.Component {
 
         }
     }
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.props.sessionAction(user.email)
+            }
+        })
+    }
     render() {
         return (
             <div>
                 <img src={logo} alt="Logo" />
-                <h1>Welcome To Todos Please Login {this.props.currentUser}</h1>
+                {
+                    !!!this.props.currentUser ?
+                        <h1>Welcome To Todos Please Login</h1>
+                        :
+                        <h1>Welcome Back {this.props.currentUser}</h1>
+                }
             </div>
 
         )
     }
 }
 
-// export default Home;
-
 const mapStateToProps = state => ({
-    currentUser: state.currentUser
-});
+    currentUser: state.sessionReducer.currentUser
+})
 const mapDispatchToProps = dispatch => ({
-});
+    sessionAction: (user) => dispatch(sessionAction(user))
+})
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
