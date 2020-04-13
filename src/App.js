@@ -13,7 +13,7 @@ export default function App() {
   return (
     <Router>
       <div>
-        <h1 className="title">React-Router-Redux-Firebase-Axios-Sass-Docker-Travis</h1>
+        <h1 className="title">React-Router-Redux-Firebase-Axios-Sass-Docker-TravisCI</h1>
             <Link to="/">Home</Link>{'\u00A0'}
             <Link to="/login">Login</Link>{'\u00A0'}
             <Link to="/todos">Todos</Link>{'\u00A0'}
