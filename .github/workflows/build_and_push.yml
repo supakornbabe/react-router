@@ -1,10 +1,11 @@
 name: Build Image and Push to Github Package
 on:
   push:
-    branches:    
-    - master 
+    branches:
+    - master
 jobs:
-  deploy:
+  build:
+    runs-on: ubuntu-18.04
     steps:
         - uses: actions/checkout@v1.0
           name: Check out code
