@@ -5,11 +5,11 @@ on:
     - master
 jobs:
   build:
-    runs-on: macos-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2.1.0
-    - uses: mr-smithers-excellent/docker-build-push@v3
+    - name: Docker Build & Push
+      uses: mr-smithers-excellent/docker-build-push@v3.0
       with:
         image: react-router/react-router
         registry: docker.pkg.github.com
